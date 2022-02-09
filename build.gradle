@@ -17,15 +17,15 @@ apply plugin: 'io.spring.dependency-management'
 
 group 'com.backend.study'
 version '1.0-SNAPSHOT'
-soourceCompatiblity = 1.8
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
