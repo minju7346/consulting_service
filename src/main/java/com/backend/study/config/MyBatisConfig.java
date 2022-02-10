@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @MapperScan(value = "com.backend.study", sqlSessionFactoryRef = "SqlSessionFactory")
 public class MyBatisConfig {
     @Value("${spring.datasource.mapper-locations}")
-    String mPath;
+    String mapperPath;
 
     @Bean(name = "dataSource")
     @ConfigurationProperties(prefix = "spring.datasource")
@@ -32,7 +32,7 @@ public class MyBatisConfig {
     public SqlSessionFactory SqlSessionFactory(@Qualifier("dataSource") DataSource DataSource, ApplicationContext applicationContext) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(DataSource);
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(mPath));
+        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(mapperPath));
         return sqlSessionFactoryBean.getObject();
     }
 

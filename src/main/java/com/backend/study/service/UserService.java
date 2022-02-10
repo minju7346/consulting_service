@@ -1,19 +1,19 @@
 package com.backend.study.service;
 
+import com.backend.study.dto.CategoryDTO;
 import com.backend.study.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 @Service
-public class UserService {
+public class UserService{
 
     @Autowired
     UserMapper userMapper;
 
-    public ArrayList<HashMap<String, Object>> findAll() {
-        return userMapper.findAll();
+    public List<CategoryDTO> findLowCategory(String pickCategory) {
+        return userMapper.findLowCategory(pickCategory);
     }
 }
