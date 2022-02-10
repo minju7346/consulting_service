@@ -3,6 +3,7 @@ package com.backend.study.dto;
 import lombok.Data;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 
 @Data
 public class CategoryDTO {
