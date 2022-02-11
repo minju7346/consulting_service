@@ -26,4 +26,10 @@ public class UserService{
         userMapper.registerCounsel(pickCategoryId);
     }
 
+    public void registerUser(String userId, String name, String password, String role) {
+        userMapper.registerUser(userId,name,password,role);
+        if(role == "" || role.equals("COUNSELOR")){
+            userMapper.registerCounselor(userId);
+        }
+    }
 }

@@ -17,7 +17,24 @@
         select *
         from cte;
     </select>
+
     <insert id="registerCounsel">
-        insert into counsel (category_id,created_at,modified_at) values (#{pickCategoryId},now(),now())
+        insert into counsel (category_id, created_at, modified_at) values (#{pickCategoryId}, now(), now())
+    </insert>
+
+    <insert id="registerUser">
+        INSERT INTO user (id, name, password, role, created_at, modified_at)
+        SELECT * FROM (SELECT #{userId} AS id, #{name} as NAME, #{password} AS password,'COUNSELOR'<if test="role == null">, #{role}</if> AS role,now() AS created_at,now() AS modified_at) AS tmp
+        WHERE NOT EXISTS (
+        SELECT id FROM user WHERE id = #{userId} AND role = 'COUNSELOR'
+        ) LIMIT 1;
+    </insert>
+
+    <insert id="registerCounselor">
+        INSERT INTO charger (user_id, created_at)
+        SELECT * FROM (SELECT #{userId} AS user_id, now() AS created_at) AS tmp
+        WHERE NOT EXISTS (
+        SELECT user_id FROM charger WHERE user_id = #{userId}
+        ) LIMIT 1;
     </insert>
 </mapper>

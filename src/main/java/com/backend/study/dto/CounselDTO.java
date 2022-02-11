@@ -1,7 +1,6 @@
 package com.backend.study.dto;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
 import java.time.LocalDateTime;
