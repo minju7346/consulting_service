@@ -2,6 +2,7 @@ package com.backend.study.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 

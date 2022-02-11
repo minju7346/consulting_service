@@ -5,17 +5,19 @@
         select * from category where parent_id = #{pickParentId} and use_yn = 'y'
     </select>
     <select id="lookCategory" resultType="com.backend.study.dto.CategoryDTO">
-        WITH RECURSIVE CTE as (
-        SELECT *
-        FROM category
-        WHERE NAME = 'root'
-        UNION ALL
-        SELECT f.*
-        FROM category f
-        INNER JOIN cte ON f.parent_id = cte.id
+        with recursive cte as (
+        select *
+        from category
+        where name = 'root'
+        union all
+        select f.*
+        from category f
+        inner join cte on f.parent_id = cte.id
         )
-        SELECT *
-        FROM CTE;
+        select *
+        from cte;
     </select>
-
+    <insert id="registerCounsel">
+        insert into counsel (category_id,created_at,modified_at) values (#{pickCategoryId},now(),now())
+    </insert>
 </mapper>

@@ -1,12 +1,12 @@
 package com.backend.study.controller;
 
 import com.backend.study.dto.CategoryDTO;
+import com.backend.study.dto.CounselDTO;
 import com.backend.study.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,18 +17,19 @@ public class UserController{
     UserService userService;
 
     @GetMapping("findLowCategory")
-    public List<CategoryDTO>  localDate(@RequestParam("pickParentId") BigInteger pickParentId){
+    public List<CategoryDTO>  findLowCategory(@RequestParam("pickParentId") BigInteger pickParentId){
 
-        List<CategoryDTO> tables = new ArrayList<>();
-        tables.addAll(userService.findLowCategory(pickParentId));
-        return tables;
+        return userService.findLowCategory(pickParentId);
     }
 
     @GetMapping("lookCategory")
-    public List<CategoryDTO>  localDate(){
+    public List<CategoryDTO>  lookCategory(){
 
-        List<CategoryDTO> tables = new ArrayList<>();
-        tables.addAll(userService.lookCategory());
-        return tables;
+        return userService.lookCategory();
+    }
+
+    @PostMapping("registerCounsel")
+    public void  registerCounsel(@RequestParam("pickCategoryId") BigInteger pickCategoryId){
+        userService.registerCounsel(pickCategoryId);
     }
 }

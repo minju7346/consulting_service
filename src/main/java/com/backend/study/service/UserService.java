@@ -17,7 +17,13 @@ public class UserService{
     public List<CategoryDTO> findLowCategory(BigInteger pickParentId) {
         return userMapper.findLowCategory(pickParentId);
     }
+
     public List<CategoryDTO> lookCategory() {
         return userMapper.lookCategory();
     }
+
+    public void registerCounsel(BigInteger pickCategoryId) {
+        userMapper.registerCounsel(pickCategoryId);
+    }
+
 }
