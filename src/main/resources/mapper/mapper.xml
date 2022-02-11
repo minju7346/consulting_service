@@ -19,22 +19,23 @@
     </select>
 
     <insert id="registerCounsel">
-        insert into counsel (category_id, created_at, modified_at) values (#{pickCategoryId}, now(), now())
+        insert into counsel (category_id, charger_id, title, content, customer_name, customer_email, status, creator_id, modifier_id, created_at, modified_at)
+        values (#{category_id}, "not assigned",#{title},#{content},#{customer_name},#{customer_email},"unsolved",#{creator_id},#{modifier_id} , now(), now())
     </insert>
 
     <insert id="registerUser">
-        INSERT INTO user (id, name, password, role, created_at, modified_at)
-        SELECT * FROM (SELECT #{userId} AS id, #{name} as NAME, #{password} AS password,'COUNSELOR'<if test="role == null">, #{role}</if> AS role,now() AS created_at,now() AS modified_at) AS tmp
+        INSERT INTO user (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
+        SELECT * FROM (SELECT #{id} AS id, #{name} as NAME, #{password} AS password,'COUNSELOR'<if test="role == null">, #{role}</if> AS role, "impossible" AS status, 'y' AS use_yn, #{creator_id} AS creator_id, #{modifier_id} AS modifier_id, now() AS created_at,now() AS modified_at) AS tmp
         WHERE NOT EXISTS (
-        SELECT id FROM user WHERE id = #{userId} AND role = 'COUNSELOR'
+        SELECT id FROM user WHERE id = #{id} AND role = 'COUNSELOR'
         ) LIMIT 1;
     </insert>
 
     <insert id="registerCounselor">
-        INSERT INTO charger (user_id, created_at)
-        SELECT * FROM (SELECT #{userId} AS user_id, now() AS created_at) AS tmp
+        INSERT INTO charger (category_id, user_id, creator_id, created_at)
+        SELECT * FROM (SELECT 0 AS category_id, #{id} AS user_id, #{creator_id} AS creator_id, now() AS created_at) AS tmp
         WHERE NOT EXISTS (
-        SELECT user_id FROM charger WHERE user_id = #{userId}
+        SELECT user_id FROM charger WHERE user_id = #{id}
         ) LIMIT 1;
     </insert>
 </mapper>

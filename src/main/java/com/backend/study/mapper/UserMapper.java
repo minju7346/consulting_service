@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserMapper {
     List<CategoryDTO>  findLowCategory(BigInteger pickParentId);
     List<CategoryDTO> lookCategory();
-    void registerCounsel(BigInteger pickCategoryId);
-    void registerUser(@Param("userId") String userId, @Param("name") String name, @Param("password") String password, @Param("role") String role);
-    void registerCounselor(@Param("userId") String userId);
+    void registerCounsel(@Param("category_id") BigInteger category_id, @Param("title") String title, @Param("content") String content, @Param("customer_name") String customer_name, @Param("customer_email") String customer_email, @Param("creator_id") String creator_id, @Param("modifier_id") String modifier_id);
+    void registerUser(@Param("id") String id, @Param("name") String name, @Param("password") String password, @Param("role") String role, @Param("creator_id") String creator_id, @Param("modifier_id") String modifier_id);
+    void registerCounselor(@Param("id") String userId, @Param("creator_id") String creator_id);
 }

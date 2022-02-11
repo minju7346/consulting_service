@@ -30,12 +30,12 @@ public class UserController{
     }
 
     @PostMapping("registerCounsel")
-    public void  registerCounsel(@RequestParam("pickCategoryId") BigInteger pickCategoryId){
-        userService.registerCounsel(pickCategoryId);
+    public void  registerCounsel(@RequestParam("category_id") BigInteger category_id, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("customer_name") String customer_name,@RequestParam("customer_email") String customer_email, @RequestParam("creator_id") String creator_id, @RequestParam("modifier_id") String modifier_id){
+        userService.registerCounsel(category_id, title, content, customer_name, customer_email, creator_id, modifier_id);
     }
 
     @PostMapping("registerUser")
-    public void  registerUser(@RequestParam("userId") String userId, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("role") String role ){
-        userService.registerUser(userId, name, password,role);
+    public void  registerUser(@RequestParam("id") String id, @RequestParam("name") String name, @RequestParam("password") String password, @RequestParam("role") String role, @RequestParam("creator_id") String creator_id, @RequestParam("modifier_id") String modifier_id ){
+        userService.registerUser(id, name, password, role, creator_id, modifier_id);
     }
 }
