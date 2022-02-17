@@ -1,23 +1,48 @@
 package com.backend.study.category.service;
 
+import com.backend.study.category.dto.CategoryDTO;
 import com.backend.study.category.mapper.CategoryMapper;
-import com.backend.study.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
     @Autowired
     CategoryMapper categoryMapper;
 
-    public List<CategoryDTO> findLowCategory(long pickParentId) {
-        return categoryMapper.findLowCategory(pickParentId);
+    public List<CategoryDTO> getChildList(long categoryId) {
+
+        return categoryMapper.selectChildList(categoryId);
     }
 
-    public List<CategoryDTO> lookCategory() {
-        return categoryMapper.lookCategory();
+    public CategoryDTO getAllCategoryTree() {
+        Map<Long, CategoryDTO> categoryMap = categoryMapper.selectAll()
+                .stream()
+                .collect(Collectors.toMap(CategoryDTO::getId, Function.identity()));
+        return makeTree(categoryMap);
     }
 
+    private CategoryDTO makeTree(Map<Long, CategoryDTO> categoryMap) {
+        categoryMap.values().stream()
+                .filter((CategoryDTO) -> !Objects.isNull(CategoryDTO.getParentId()))
+                .forEach((CategoryDTO) -> {
+                    CategoryDTO parentCategory = categoryMap.get(CategoryDTO.getParentId());
+                    parentCategory.addChild(CategoryDTO);
+                });
+
+        return findRootCategory(categoryMap);
+    }
+
+    private CategoryDTO findRootCategory(Map<Long, CategoryDTO> categoryMap) {
+        return categoryMap.values().stream()
+                .filter(CategoryDTO -> Objects.isNull(CategoryDTO.getParentId()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Category Tree has no root"));
+    }
 }

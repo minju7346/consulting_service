@@ -2,35 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.counsel.mapper.CounselMapper">
 
-    <select id="findLowCategory" resultType="com.backend.study.dto.CategoryDTO">
-        SELECT * FROM category WHERE parent_id = #{pickParentId} AND use_yn = 'Y'
-    </select>
-
-    <select id="lookCategory" resultType="com.backend.study.dto.CategoryDTO">
-        WITH RECURSIVE returnTable as (
-        SELECT *
-        FROM category
-        WHERE name = 'root'
-        UNION ALL
-        SELECT recursiveTable.*
-        FROM category recursiveTable
-        INNER JOIN returnTable ON recursiveTable.parent_id = returnTable.id
-        )
-        SELECT *
-        FROM returnTable
-        WHERE use_yn = 'Y';
-    </select>
-
-    <insert id="registerCounsel">
+    <insert id="insertCounsel" parameterType="com.backend.study.counsel.dto.CounselDTO">
         INSERT INTO counsel
-        (category_id, charger_id, title, content, customer_name, customer_email, status, creator_id, modifier_id, created_at, modified_at)
+            (category_id, charger_id, title, content, customer_name, customer_email, status, creator_id, modifier_id, created_at, modified_at)
         VALUES
-        (#{category_id}, "NOT ASSIGNED",#{title},#{content},#{customer_name},#{customer_email},"UNSOLVED",#{creator_id},#{modifier_id} , now(), now())
+            (#{id}, "NOT ASSIGNED", #{title}, #{content}, #{customerName},#{customerEmail},"UNSOLVED",#{creatorId},#{modifierId} , now(), now())
     </insert>
 
-    <insert id="registerUser">
-        INSERT INTO user (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
+    <insert id="insertCounselHistory" parameterType="com.backend.study.counsel.dto.CounselDTO">
+        <selectKey resultType="long" keyProperty="id" order="BEFORE">
+            SELECT MAX(id)+1 FROM counsel
+        </selectKey>
+        INSERT INTO counsel_history
+            (counsel_id, sequence, category_id, title, content, requestor_email, charger_id, status, creator_id, created_at)
         VALUES
-        (#{id}, #{name}, #{password},'COUNSELOR', "IMPOSSIBLE", 'Y', #{creator_id}, #{modifier_id}, now(), now())
+            (#{id}, #{id} + 1,
+             #{categoryId},#{title},#{content},#{customerEmail},"NOT ASSIGNED","UNSOLVED", #{creatorId},
+            (SELECT modified_at FROM counsel c WHERE c.id = #{id}))
     </insert>
+
+
 </mapper>

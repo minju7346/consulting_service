@@ -53,7 +53,7 @@ public class MyBatisConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         factoryBean.setConfiguration(configuration);
 
-        factoryBean.setTypeAliasesPackage("com.backend.study.dto");
+        factoryBean.setTypeAliasesPackage("com.backend.study.**.dto");
         factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/*.xml"));
         return factoryBean.getObject();
     }

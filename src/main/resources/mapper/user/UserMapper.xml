@@ -2,35 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.user.mapper.UserMapper">
 
-    <select id="findLowCategory" resultType="com.backend.study.dto.CategoryDTO">
-        SELECT * FROM category WHERE parent_id = #{pickParentId} AND use_yn = 'Y'
-    </select>
-
-    <select id="lookCategory" resultType="com.backend.study.dto.CategoryDTO">
-        WITH RECURSIVE returnTable as (
-        SELECT *
-        FROM category
-        WHERE name = 'root'
-        UNION ALL
-        SELECT recursiveTable.*
-        FROM category recursiveTable
-        INNER JOIN returnTable ON recursiveTable.parent_id = returnTable.id
-        )
-        SELECT *
-        FROM returnTable
-        WHERE use_yn = 'Y';
-    </select>
-
-    <insert id="registerCounsel">
-        INSERT INTO counsel
-        (category_id, charger_id, title, content, customer_name, customer_email, status, creator_id, modifier_id, created_at, modified_at)
+    <insert id="insertUser" parameterType="com.backend.study.user.dto.UserDTO">
+        INSERT INTO user
+            (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
         VALUES
-        (#{category_id}, "NOT ASSIGNED",#{title},#{content},#{customer_name},#{customer_email},"UNSOLVED",#{creator_id},#{modifier_id} , now(), now())
+            (#{id}, #{name}, #{password},'COUNSELOR', "IMPOSSIBLE", 'Y', #{creatorId}, #{modifierId}, now(), now())
     </insert>
 
-    <insert id="registerUser">
-        INSERT INTO user (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
+    <insert id="insertUserHistory" parameterType="com.backend.study.user.dto.UserDTO">
+        INSERT INTO user_history
+            (user_id, sequence, name, password, role, status, use_yn, creator_id, created_at)
         VALUES
-        (#{id}, #{name}, #{password},'COUNSELOR', "IMPOSSIBLE", 'Y', #{creator_id}, #{modifier_id}, now(), now())
+            (#{id},
+             (SELECT COUNT(*) FROM user_history userHist WHERE userHist.user_id = #{id}) + 1,
+             #{name}, #{password},'COUNSELOR', "IMPOSSIBLE", 'Y', #{creatorId},
+             (SELECT modified_at FROM user u WHERE u.id = #{id}))
     </insert>
 </mapper>
+
