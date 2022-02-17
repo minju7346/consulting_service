@@ -1,11 +1,48 @@
 package com.backend.study;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.DispatcherServlet;
 
-@SpringBootApplication
-public class Application {
-    public static void main(String[] args){
-        SpringApplication.run(Application.class, args);
+import com.backend.study.configuration.AppConfig;
+
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
+
+public class Application implements WebApplicationInitializer {
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+        rootContext.register(AppConfig.class);
+
+        addListener(servletContext, rootContext);
+
+        addServlet(servletContext, rootContext);
+
+        addFilter(servletContext);
+    }
+
+    private void addListener(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
+        servletContext.addListener(new ContextLoaderListener(rootContext));
+    }
+
+    private void addServlet(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
+        // root contetxt 와 servlet context 의 개념 알기
+        ServletRegistration.Dynamic dispatcher =
+                servletContext.addServlet("dispatcher", new DispatcherServlet(rootContext));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+    }
+
+    private void addFilter(ServletContext servletContext) {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter("UTF-8", true, true);
+        FilterRegistration.Dynamic encodingFilter = servletContext.addFilter(
+                "characterEncodingFilter", characterEncodingFilter);
+        encodingFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 }
