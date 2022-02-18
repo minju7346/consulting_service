@@ -11,7 +11,7 @@ public class CounselController {
     @Autowired
     private CounselService counselService;
 
-    @PostMapping("/counsel/register")
+    @PostMapping("/counsel")
     public void  registerCounsel(@RequestBody CounselDTO counselDTO){
         counselService.registerCounsel(counselDTO);
     }

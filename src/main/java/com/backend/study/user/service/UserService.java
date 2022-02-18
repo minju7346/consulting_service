@@ -20,7 +20,10 @@ public class UserService{
 
     @Transactional
     public void registerCounselHistory(UserDTO userDTO){
-
         userMapper.insertUserHistory(userDTO);
+    }
+
+    public String loginUser(UserDTO userDTO){
+        return userMapper.selectId(userDTO);
     }
 }

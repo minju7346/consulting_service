@@ -18,5 +18,12 @@
              #{name}, #{password},'COUNSELOR', "IMPOSSIBLE", 'Y', #{creatorId},
              (SELECT modified_at FROM user u WHERE u.id = #{id}))
     </insert>
+
+    <select id="selectId" resultType="String">
+        SELECT id
+        FROM user
+        WHERE id=#{id} and password=#{password}
+    </select>
+
 </mapper>
 

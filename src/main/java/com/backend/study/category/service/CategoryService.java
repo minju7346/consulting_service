@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class CategoryService {
     @Autowired
-    CategoryMapper categoryMapper;
+    private CategoryMapper categoryMapper;
 
     public List<CategoryDTO> getChildList(long categoryId) {
 

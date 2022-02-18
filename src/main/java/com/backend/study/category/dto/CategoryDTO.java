@@ -38,17 +38,4 @@ public class CategoryDTO {
 
         children.add(child);
     }
-    public CategoryDTO(long id, long parentId, String name, String description, String useYn, Integer depth, String creatorId, String modifierId, LocalDateTime createdAt, LocalDateTime modifiedAt){
-        this.id = id;
-        this.parentId = parentId;
-        this.name = name;
-        this.description = description;
-        this.useYn = useYn;
-        this.depth = depth;
-        this.creatorId = creatorId;
-        this.modifierId = modifierId;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-    }
-
 }

@@ -13,13 +13,13 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/category/Child")
+    @GetMapping("/category/ChildList")
     public List<CategoryDTO> getChildList(@RequestParam("categoryId") long categoryId){
 
         return categoryService.getChildList(categoryId);
     }
 
-    @GetMapping("/category/All")
+    @GetMapping("/category/AllList")
     public CategoryDTO getAllCategoryTree(){
 
         return categoryService.getAllCategoryTree();
