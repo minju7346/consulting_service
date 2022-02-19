@@ -20,5 +20,43 @@
             id = #{id}
     </insert>
 
+    <select id="selectId" resultType="String">
+        SELECT id
+        FROM user
+        WHERE id=#{id} and password=#{password}
+    </select>
+
+    <update id="updateStatusPossible">
+        UPDATE user
+        SET
+            status = "POSSIBLE"
+        where
+            id = #{id}
+    </update>
+
+    <update id="updateStatusPossibleHistory">
+        UPDATE user_history
+        SET
+            status = "POSSIBLE"
+        where
+            user_id = #{id}
+    </update>
+
+    <update id="updateStatusImpossible">
+        UPDATE user
+        SET
+            status = "IMPOSSIBLE"
+        where
+            id = #{id}
+    </update>
+
+    <update id="updateStatusImpossibleHistory">
+        UPDATE user_history
+        SET
+            status = "IMPOSSIBLE"
+        where
+            user_id = #{id}
+    </update>
+
 </mapper>
 

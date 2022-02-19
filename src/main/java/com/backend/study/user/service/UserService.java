@@ -18,4 +18,20 @@ public class UserService{
         userMapper.insertHistory(userDTO.getId());
     }
 
+    public String login(UserDTO userDTO) {
+        return userMapper.selectId(userDTO);
+    }
+
+    @Transactional
+    public void toPossible(String id){
+        userMapper.updateStatusPossible(id);
+        userMapper.updateStatusPossibleHistory(id);
+    }
+
+    @Transactional
+    public void toImpossible(String id){
+        userMapper.updateStatusImpossible(id);
+        userMapper.updateStatusImpossibleHistory(id);
+    }
+
 }
