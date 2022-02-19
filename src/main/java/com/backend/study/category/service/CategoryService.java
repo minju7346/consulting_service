@@ -16,11 +16,6 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public List<CategoryDTO> getChildList(long id) {
-
-        return categoryMapper.selectChildList(id);
-    }
-
     public CategoryDTO getAllCategoryTree() {
         Map<Long, CategoryDTO> categoryMap = categoryMapper.selectAllList()
                 .stream()
@@ -44,5 +39,11 @@ public class CategoryService {
                 .filter(CategoryDTO -> Objects.isNull(CategoryDTO.getParentId()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Category Tree has no root"));
+    }
+
+
+    public List<CategoryDTO> getChildList(long id) {
+
+        return categoryMapper.selectChildList(id);
     }
 }

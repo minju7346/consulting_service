@@ -10,10 +10,14 @@
         WHERE parent_id = #{categoryId} AND use_yn = 'Y';
     </select>
 
-    <select id="selectAll" resultType="com.backend.study.category.dto.CategoryDTO">
-        SELECT id
-             , parent_id
-             , name
-        FROM category
+    <select id="selectAllList" resultType="com.backend.study.category.dto.CategoryDTO">
+        SELECT
+            id, parent_id, name, description, use_yn, depth,
+            creator_id, modifier_id, created_at, modified_at
+        FROM
+            category
+        WHERE
+            use_yn = 'Y';
     </select>
+
 </mapper>

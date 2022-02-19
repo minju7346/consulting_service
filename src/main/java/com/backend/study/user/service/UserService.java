@@ -12,11 +12,10 @@ public class UserService{
     @Autowired
     UserMapper userMapper;
 
+    @Transactional
     public void register(UserDTO userDTO) {
         userMapper.insert(userDTO);
+        userMapper.insertHistory(userDTO.getId());
     }
 
-    public void registerHistory(String id) {
-        userMapper.insertHistory(id);
-    }
 }

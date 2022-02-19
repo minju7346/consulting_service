@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface CounselMapper {
-    long insert(CounselDTO counselDTO);
+    void insert(CounselDTO counselDTO);
     void insertHistory(long id);
 }

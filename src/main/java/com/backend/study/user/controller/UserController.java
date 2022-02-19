@@ -5,9 +5,6 @@ import com.backend.study.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 @RestController
 public class UserController{
 
@@ -17,7 +14,7 @@ public class UserController{
     @PostMapping("/user")
     public void  register(@RequestBody UserDTO userDTO){
         userService.register(userDTO);
-        userService.registerHistory(userDTO.getId());
     }
+
 }
 

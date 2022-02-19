@@ -14,7 +14,6 @@ public class CounselController {
     @PostMapping("/counsel")
     public void  register(@RequestBody CounselDTO counselDTO){
         counselService.register(counselDTO);
-        counselService.registerHistory(counselDTO.getId());
     }
 }
 
