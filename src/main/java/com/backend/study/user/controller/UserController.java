@@ -15,19 +15,9 @@ public class UserController{
     private UserService userService;
 
     @PostMapping("/user")
-    public void  registerUser(@RequestBody UserDTO userDTO){
-        userService.registerUser(userDTO);
-    }
-
-    @PostMapping("/user-login")
-    public void loginUser(@RequestBody UserDTO userDTO, HttpServletResponse response){
-        String check;
-        check = userService.loginUser(userDTO);
-        if (check != null) {
-            Cookie cookie = new Cookie("id", userDTO.getId());
-            cookie.setMaxAge(60 * 60 * 24 * 30);
-            response.addCookie(cookie);
-        }
+    public void  register(@RequestBody UserDTO userDTO){
+        userService.register(userDTO);
+        userService.registerHistory(userDTO.getId());
     }
 }
 

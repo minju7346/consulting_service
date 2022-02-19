@@ -16,13 +16,13 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public List<CategoryDTO> getChildList(long categoryId) {
+    public List<CategoryDTO> getChildList(long id) {
 
-        return categoryMapper.selectChildList(categoryId);
+        return categoryMapper.selectChildList(id);
     }
 
     public CategoryDTO getAllCategoryTree() {
-        Map<Long, CategoryDTO> categoryMap = categoryMapper.selectAll()
+        Map<Long, CategoryDTO> categoryMap = categoryMapper.selectAllList()
                 .stream()
                 .collect(Collectors.toMap(CategoryDTO::getId, Function.identity()));
         return makeTree(categoryMap);

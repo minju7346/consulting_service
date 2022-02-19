@@ -12,8 +12,9 @@ public class CounselController {
     private CounselService counselService;
 
     @PostMapping("/counsel")
-    public void  registerCounsel(@RequestBody CounselDTO counselDTO){
-        counselService.registerCounsel(counselDTO);
+    public void  register(@RequestBody CounselDTO counselDTO){
+        counselService.register(counselDTO);
+        counselService.registerHistory(counselDTO.getId());
     }
 }
 

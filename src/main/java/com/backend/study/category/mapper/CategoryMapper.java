@@ -7,6 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
-    List<CategoryDTO> selectChildList(long categoryId);
-    List<CategoryDTO> selectAll();
+    List<CategoryDTO> selectChildList(long id);
+    List<CategoryDTO> selectAllList();
 }

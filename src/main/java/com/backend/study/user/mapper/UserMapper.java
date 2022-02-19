@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UserMapper {
-      void insertUser(UserDTO userDTO);
-      void insertUserHistory(UserDTO userDTO);
-      String selectId(UserDTO userDTO);
+      void insert(UserDTO userDTO);
+      void insertHistory(String id);
 }
