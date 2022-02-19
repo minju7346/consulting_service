@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.study.counsel.mapper.CounselMapper">
+
+    <insert id="insert" parameterType="com.backend.study.counsel.dto.CounselDTO" useGeneratedKeys="true" keyProperty="id" >
+        INSERT INTO counsel
+            (category_id, title, content, customer_name, customer_email, creator_id, modifier_id, created_at, modified_at)
+        VALUES
+            (#{categoryId}, #{title}, #{content}, #{customerName},#{customerEmail},#{creatorId},#{modifierId} , now(), now())
+    </insert>
+
+    <insert id="insertHistory">
+        INSERT INTO counsel_history
+            (counsel_id, sequence, category_id, title, content, requestor_email, creator_id, created_at)
+        SELECT
+            #{id}, (SELECT COUNT(*) FROM counsel_history hist WHERE hist.counsel_id = #{id}) + 1,
+            category_id, title, content, customer_email, creator_id, modified_at
+        FROM counsel
+        WHERE
+            id = #{id}
+    </insert>
+
+
+</mapper>
