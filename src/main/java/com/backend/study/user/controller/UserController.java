@@ -3,7 +3,7 @@ package com.backend.study.user.controller;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import com.backend.study.user.dto.UserDTO;
+import com.backend.study.user.model.UserDTO;
 import com.backend.study.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +30,10 @@ public class UserController{
         }
     }
 
-    @PutMapping("/user-status-possible/{id}")
-    public void toPossible(@PathVariable String id){
-        userService.toPossible(id);
-    }
+    @PatchMapping("/user-status")
+    public void changeStatus(@RequestBody UserDTO userDTO){
 
-    @PutMapping("/user-status-impossible/{id}")
-    public void toImpossible(@PathVariable String id){
-        userService.toImpossible(id);
+        userService.chanageStatus(userDTO);
     }
 
 }

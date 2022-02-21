@@ -1,6 +1,6 @@
 package com.backend.study.category.mapper;
 
-import com.backend.study.category.dto.CategoryDTO;
+import com.backend.study.category.model.CategoryDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

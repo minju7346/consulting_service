@@ -1,7 +1,7 @@
 package com.backend.study.counsel.service;
 
 import com.backend.study.counsel.mapper.CounselMapper;
-import com.backend.study.counsel.dto.CounselDTO;
+import com.backend.study.counsel.model.CounselDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

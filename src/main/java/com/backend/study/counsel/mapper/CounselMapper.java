@@ -1,6 +1,6 @@
 package com.backend.study.counsel.mapper;
 
-import com.backend.study.counsel.dto.CounselDTO;
+import com.backend.study.counsel.model.CounselDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 

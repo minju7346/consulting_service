@@ -1,6 +1,6 @@
 package com.backend.study.category.controller;
 
-import com.backend.study.category.dto.CategoryDTO;
+import com.backend.study.category.model.CategoryDTO;
 import com.backend.study.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

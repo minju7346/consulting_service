@@ -1,7 +1,7 @@
 package com.backend.study.counsel.controller;
 
 import com.backend.study.counsel.service.CounselService;
-import com.backend.study.counsel.dto.CounselDTO;
+import com.backend.study.counsel.model.CounselDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

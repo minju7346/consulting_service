@@ -1,4 +1,4 @@
-package com.backend.study.counsel.dto;
+package com.backend.study.counsel.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

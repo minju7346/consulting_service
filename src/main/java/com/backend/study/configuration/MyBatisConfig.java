@@ -1,6 +1,7 @@
 package com.backend.study.configuration;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+import com.backend.study.user.typehandler.UserRoleHandler;
+import com.backend.study.user.typehandler.UserStatusHandler;
 
 @Configuration
 @MapperScan(basePackages = "com.backend.study.**.mapper")
@@ -55,6 +58,10 @@ public class MyBatisConfig {
 
         factoryBean.setTypeAliasesPackage("com.backend.study.**.dto");
         factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/*.xml"));
+        factoryBean.setTypeHandlers(new TypeHandler[] {
+            new UserRoleHandler(),
+            new UserStatusHandler()
+        });
         return factoryBean.getObject();
     }
 }

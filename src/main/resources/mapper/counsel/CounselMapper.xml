@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.counsel.mapper.CounselMapper">
 
-    <insert id="insert" parameterType="com.backend.study.counsel.dto.CounselDTO" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.backend.study.counsel.model.CounselDTO" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO counsel
             (category_id, title, content, customer_name, customer_email, creator_id, modifier_id, created_at, modified_at)
         VALUES

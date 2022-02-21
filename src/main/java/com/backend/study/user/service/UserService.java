@@ -1,7 +1,8 @@
 package com.backend.study.user.service;
 
-import com.backend.study.user.dto.UserDTO;
+import com.backend.study.user.model.UserDTO;
 import com.backend.study.user.mapper.UserMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,19 +20,14 @@ public class UserService{
     }
 
     public String login(UserDTO userDTO) {
+
         return userMapper.selectId(userDTO);
     }
 
     @Transactional
-    public void toPossible(String id){
-        userMapper.updateStatusPossible(id);
-        userMapper.updateStatusPossibleHistory(id);
-    }
-
-    @Transactional
-    public void toImpossible(String id){
-        userMapper.updateStatusImpossible(id);
-        userMapper.updateStatusImpossibleHistory(id);
+    public void chanageStatus(UserDTO userDTO){
+        userMapper.updateStatus(userDTO);
+        userMapper.updateStatusHistory(userDTO);
     }
 
 }
