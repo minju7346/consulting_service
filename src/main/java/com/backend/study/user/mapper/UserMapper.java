@@ -1,6 +1,7 @@
 package com.backend.study.user.mapper;
 
 import com.backend.study.user.model.UserDTO;
+import com.backend.study.user.model.UserStatusDTO;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +12,6 @@ public interface UserMapper {
       String selectId(UserDTO userDTO);
       void insert(UserDTO userDTO);
       void insertHistory(String id);
-      void updateStatus(UserDTO userDTO);
-      void updateStatusHistory(UserDTO userDTO);
+      void updateStatus(UserStatusDTO userStatusDTO);
+      void updateStatusHistory(UserStatusDTO userStatusDTO);
 }

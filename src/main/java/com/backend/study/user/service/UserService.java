@@ -2,6 +2,7 @@ package com.backend.study.user.service;
 
 import com.backend.study.user.model.UserDTO;
 import com.backend.study.user.mapper.UserMapper;
+import com.backend.study.user.model.UserStatusDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,9 @@ public class UserService{
     }
 
     @Transactional
-    public void chanageStatus(UserDTO userDTO){
-        userMapper.updateStatus(userDTO);
-        userMapper.updateStatusHistory(userDTO);
+    public void chanageStatus(UserStatusDTO userStatusDTO){
+        userMapper.updateStatus(userStatusDTO);
+        userMapper.updateStatusHistory(userStatusDTO);
     }
 
 }

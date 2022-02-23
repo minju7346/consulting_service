@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import com.backend.study.user.model.UserDTO;
+import com.backend.study.user.model.UserStatusDTO;
 import com.backend.study.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +33,9 @@ public class UserController{
     }
 
     @PatchMapping("/user-status")
-    public void changeStatus(@RequestBody UserDTO userDTO){
+    public void changeStatus(@RequestBody UserStatusDTO userStatusDTO){
 
-        userService.chanageStatus(userDTO);
+        userService.chanageStatus(userStatusDTO);
     }
 
 }
