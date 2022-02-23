@@ -2,19 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.user.mapper.UserMapper">
 
+
+    <select id="selectRole" resultType="String">
+        SELECT role
+        FROM user
+        where id = #{id}
+    </select>
+
     <insert id="insert" parameterType="com.backend.study.user.model.UserDTO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user
-            (id, name, password, role, use_yn, creator_id, modifier_id, created_at, modified_at)
+            (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
         VALUES
-            (#{id}, #{name}, #{password}, #{role}, 'Y', #{creatorId}, #{modifierId}, now(), now())
+            (#{id}, #{name}, #{password}, #{role}, #{status}, 'Y', #{creatorId}, #{modifierId}, now(), now())
     </insert>
 
     <insert id="insertHistory" parameterType="com.backend.study.user.model.UserDTO">
         INSERT INTO user_history
-        (user_id, sequence, name, password, role, userStatus, use_yn, creator_id, created_at)
+        (user_id, sequence, name, password, role, status, use_yn, creator_id, created_at)
         SELECT
             #{id}, (SELECT COUNT(*) FROM user_history userHist WHERE userHist.user_id = #{id}) + 1,
-            name, password, role, userStatus, use_yn, creator_id, modified_at
+            name, password, role, status, use_yn, creator_id, modified_at
         FROM user
         WHERE
             id = #{id}

@@ -20,5 +20,34 @@
             id = #{id}
     </insert>
 
+    <select id="selectCharger" resultType="String">
+        SELECT user_id, COUNT(category_id)
+        FROM charger
+        WHERE user_id IN
+              (
+                  SELECT id
+                  FROM user
+                  WHERE status = "POSSIBLE" AND role = "COUNSELOR"
+              )
+        GROUP BY user_id
+        HAVING category_id = #{category_id}
+        ORDER BY COUNT(category_id), user_id
+        LIMIT 1
+
+    </select>
+
+    <update id="updateCharger" parameterType="com.backend.study.counsel.model.CounselDTO">
+        UPDATE counsel
+        SET
+            charger_id = #{user_id}
+        where
+            id = #{id}
+    </update>
+
+    <select id="selectNoChargerCounsels" resultType="Integer">
+        SELECT COUNT(*)
+        FROM counsel
+        WHERE charger_id IS NULL AND category_id = #{category_id}
+    </select>
 
 </mapper>

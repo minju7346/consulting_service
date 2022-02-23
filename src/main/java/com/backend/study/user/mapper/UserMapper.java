@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
+      String selectRole(String id);
+      String selectId(UserDTO userDTO);
       void insert(UserDTO userDTO);
       void insertHistory(String id);
-      String selectId(UserDTO userDTO);
       void updateStatus(UserDTO userDTO);
       void updateStatusHistory(UserDTO userDTO);
 }
