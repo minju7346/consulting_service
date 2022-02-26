@@ -2,6 +2,7 @@ package com.backend.study.user.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import com.backend.study.user.model.enums.UserStatus;
 @NoArgsConstructor
 public class UserDTO {
 
+    @Setter
     private String id;
     private String name;
     private String password;

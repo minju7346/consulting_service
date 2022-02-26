@@ -1,7 +1,7 @@
 package com.backend.study.user.model.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 @Getter
 @AllArgsConstructor

@@ -1,10 +1,12 @@
 package com.backend.study.counsel.service;
 
-
+import static com.backend.study.user.model.enums.UserRole.*;
+import static com.backend.study.user.model.enums.UserStatus.*;
 
 import com.backend.study.counsel.mapper.CounselMapper;
 import com.backend.study.user.mapper.UserMapper;
 import com.backend.study.counsel.model.CounselDTO;
+import com.backend.study.user.model.enums.UserRole;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,27 +21,35 @@ public class CounselService {
     private UserMapper userMapper;
 
     @Transactional
-    public void register(CounselDTO counselDTO) {
+    public void register(CounselDTO counselDTO, long counselId) {
+        if(!userMapper.hasPossibleCounselor()){
+            counselDTO.setChargerId(null);
+        }
+        else{
+            CounselDTO chargerCounselDTO = counselMapper.selectCharger(counselDTO.getCategoryId());
+            counselDTO.setChargerId(chargerCounselDTO.getChargerId());
+        }
         counselMapper.insert(counselDTO);
-        counselMapper.insertHistory(counselDTO.getId());
+        counselMapper.insertHistory(counselId);
     }
 
     @Transactional
-    public void distribute(String id, long category_id, CounselDTO counselDTO) {
-        String userRole = userMapper.selectRole(id);
-        if (userRole.equals("MANAGER")){
-            String user_id = counselMapper.selectCharger(category_id);
-            counselMapper.updateCharger(user_id,counselDTO);
+    public void distribute(String id, long categoryId, long counselId) {
+        UserRole userRole = userMapper.selectRole(id);
+        if (!MANAGER.equals(userRole)) {
+            throw new IllegalArgumentException("권한이 없습니다.");
         }
+        CounselDTO counselDTO = counselMapper.selectCharger(categoryId);
+        counselMapper.updateCharger(counselDTO.getChargerId(),counselId);
+        counselMapper.insertHistory(counselId);
     }
-    
-    @Transactional
-    public Integer getNoChargerCounsels(String id, long category_id){
-        String userRole = userMapper.selectRole(id);
-        if (userRole.equals("MANAGER")) {
-            return counselMapper.selectNoChargerCounsels(category_id);
+
+    public int getNoChargerCounsels(String id, long categoryId){
+        UserRole userRole = userMapper.selectRole(id);
+        if (!MANAGER.equals(userRole)) {
+            throw new IllegalArgumentException("권한이 없습니다.");
         }
-        return -1;
+        return counselMapper.selectNoChargerCounsels(categoryId);
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -17,13 +18,21 @@ import java.util.List;
         "com.backend.study.**.controller",
         "com.backend.study.**.service"
 })
+
 public class AppConfig implements WebMvcConfigurer {
 
-    // Interceptor
-    // argumentResolver 등 넣어줌
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new StringHttpMessageConverter());
         converters.add(new MappingJackson2HttpMessageConverter());
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        registry.addInterceptor(new AuthInterceptor())
+            .order(1)
+            .addPathPatterns("/user-status/**", "/counsel/**");
     }
 }

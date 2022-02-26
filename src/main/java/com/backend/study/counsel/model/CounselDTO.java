@@ -2,6 +2,7 @@ package com.backend.study.counsel.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ public class CounselDTO {
 
     private long id;
     private long categoryId;
+    @Setter
     private String chargerId;
     private String title;
     private String content;

@@ -3,17 +3,25 @@
 <mapper namespace="com.backend.study.user.mapper.UserMapper">
 
 
-    <select id="selectRole" resultType="String">
+    <select id="hasPossibleCounselor" resultType="Boolean">
+        SELECT EXISTS
+            (
+                SELECT id
+                FROM user
+                WHERE status = "POSSIBLE"
+            );
+    </select>
+    <select id="selectRole" resultType="com.backend.study.user.model.enums.UserRole">
         SELECT role
         FROM user
-        where id = #{id}
+        WHERE id = #{id}
     </select>
 
     <insert id="insert" parameterType="com.backend.study.user.model.UserDTO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user
             (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
         VALUES
-            (#{id}, #{name}, #{password}, #{role}, #{status}, 'Y', #{creatorId}, #{modifierId}, now(), now())
+            (#{id}, #{name}, #{password}, #{role}, #{status}, 'Y', #{creatorId}, #{modifierId}, NOW(), NOW())
     </insert>
 
     <insert id="insertHistory" parameterType="com.backend.study.user.model.UserDTO">
@@ -27,27 +35,32 @@
             id = #{id}
     </insert>
 
-    <select id="selectId" resultType="String">
-        SELECT id
-        FROM user
-        WHERE id=#{id} and password=#{password}
+    <select id="selectExistId" resultType="Boolean">
+        SELECT EXISTS
+            (
+                SELECT id
+                FROM user
+                WHERE id = #{id}
+            );
     </select>
 
-    <update id="updateStatus">
+    <select id="selectIdByPassword" resultType="Boolean" >
+        SELECT EXISTS
+            (
+                SELECT id
+                FROM user
+                WHERE id = #{id} and password = #{password}
+            );
+    </select>
+
+    <update id="updateStatus" parameterType="com.backend.study.user.model.UserDTO">
         UPDATE user
         SET
-            status = #{status}
+            status = #{userStatus}, modified_at = NOW(), modifier_id = #{id}
         WHERE
-            id = #{id}
+            id = #{id};
     </update>
 
-    <update id="updateStatusHistory">
-        UPDATE user_history
-        SET
-            status = #{status}
-        where
-            user_id = #{id}
-    </update>
 
 </mapper>
 

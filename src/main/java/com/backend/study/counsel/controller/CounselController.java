@@ -7,7 +7,6 @@ import com.backend.study.counsel.model.CounselDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.Getter;
 
 @RestController
 public class CounselController {
@@ -16,23 +15,22 @@ public class CounselController {
     private CounselService counselService;
 
     @PostMapping("/counsel")
-    public void  register(@RequestBody CounselDTO counselDTO){
-
-        counselService.register(counselDTO);
+    public void  register(@RequestBody CounselDTO counselDTO, @RequestParam long counselId){
+        counselService.register(counselDTO, counselId);
     }
 
-    @PatchMapping("/counsel")
+    @PatchMapping("/counsel/{categoryId}")
     public void distribute(@CookieValue(value = "id") Cookie cookie,
-            @RequestBody CounselDTO counselDTO, @RequestParam long category_id){
+            @RequestParam long counselId, @PathVariable long categoryId){
         String id = cookie.getValue();
-        counselService.distribute(id, category_id, counselDTO);
+        counselService.distribute(id, categoryId, counselId);
     }
 
-    @GetMapping("/counsel")
-    public Integer getNoChargerCounsels(@CookieValue(value = "id") Cookie cookie,
-            @RequestParam long category_id){
+    @GetMapping("/counsel/{categoryId}")
+    public Integer countNoChargerCounsels(@CookieValue(value = "id") Cookie cookie,
+            @PathVariable long categoryId){
         String id = cookie.getValue();
-        return counselService.getNoChargerCounsels(id, category_id);
+        return counselService.getNoChargerCounsels(id, categoryId);
     }
 
 }
