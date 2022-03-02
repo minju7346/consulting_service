@@ -10,6 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+import com.backend.study.user.interceptor.UserInterceptor;
+import com.backend.study.user.mapper.UserMapper;
+
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @Import({MyBatisConfig.class})
 @PropertySource("classpath:application.properties")
@@ -19,8 +24,10 @@ import java.util.List;
         "com.backend.study.**.service"
 })
 
+@RequiredArgsConstructor
 public class AppConfig implements WebMvcConfigurer {
 
+    private final UserMapper userMapper;
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -30,9 +37,6 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
-        registry.addInterceptor(new AuthInterceptor())
-            .order(1)
-            .addPathPatterns("/user-status/**", "/counsel/**");
+        registry.addInterceptor(new UserInterceptor(userMapper));
     }
 }

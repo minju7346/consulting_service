@@ -4,6 +4,7 @@ import static com.backend.study.user.model.enums.UserRole.*;
 import static com.backend.study.user.model.enums.UserStatus.*;
 
 import com.backend.study.counsel.mapper.CounselMapper;
+import com.backend.study.counsel.model.AnswerDTO;
 import com.backend.study.user.mapper.UserMapper;
 import com.backend.study.counsel.model.CounselDTO;
 import com.backend.study.user.model.enums.UserRole;
@@ -44,12 +45,21 @@ public class CounselService {
         counselMapper.insertHistory(counselId);
     }
 
-    public int getNoChargerCounsels(String id, long categoryId){
+    public int countNoChargerCounsels(String id, long categoryId){
         UserRole userRole = userMapper.selectRole(id);
         if (!MANAGER.equals(userRole)) {
             throw new IllegalArgumentException("권한이 없습니다.");
         }
         return counselMapper.selectNoChargerCounsels(categoryId);
+    }
+
+    public void answerCounsel(String chargerId, AnswerDTO answerDTO){
+        if(!counselMapper.isRightCharger(answerDTO.getCounselId(), chargerId)){
+            throw new IllegalArgumentException("해당 문의의 담당자가 아닙니다.");
+        }
+        counselMapper.insertAnswer(answerDTO);
+        counselMapper.insertAnswerHistory(answerDTO.getId());
+
     }
 
 }

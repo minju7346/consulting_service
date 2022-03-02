@@ -11,6 +11,7 @@
                 WHERE status = "POSSIBLE"
             );
     </select>
+
     <select id="selectRole" resultType="com.backend.study.user.model.enums.UserRole">
         SELECT role
         FROM user
@@ -60,7 +61,6 @@
         WHERE
             id = #{id};
     </update>
-
 
 </mapper>
 
