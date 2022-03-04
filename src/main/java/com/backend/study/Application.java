@@ -20,15 +20,15 @@ public class Application implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(AppConfig.class);
 
-        addListener(servletContext, rootContext);
+        addListener(rootContext);
 
         addServlet(servletContext, rootContext);
 
         addFilter(servletContext);
     }
 
-    private void addListener(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
-        servletContext.addListener(new ContextLoaderListener(rootContext));
+    private void addListener(AnnotationConfigWebApplicationContext rootContext) {
+
     }
 
     private void addServlet(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {

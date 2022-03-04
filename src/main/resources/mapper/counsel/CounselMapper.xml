@@ -2,23 +2,82 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.counsel.mapper.CounselMapper">
 
-    <insert id="insert" parameterType="com.backend.study.counsel.dto.CounselDTO" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.backend.study.counsel.model.CounselDTO" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO counsel
-            (category_id, title, content, customer_name, customer_email, creator_id, modifier_id, created_at, modified_at)
+            (category_id, charger_id, title, content, customer_name, customer_email, creator_id, modifier_id, created_at, modified_at)
         VALUES
-            (#{categoryId}, #{title}, #{content}, #{customerName},#{customerEmail},#{creatorId},#{modifierId} , now(), now())
+            (#{categoryId}, #{chargerId}, #{title}, #{content}, #{customerName},#{customerEmail},#{creatorId},#{modifierId} ,NOW(), NOW())
     </insert>
 
     <insert id="insertHistory">
         INSERT INTO counsel_history
             (counsel_id, sequence, category_id, title, content, requestor_email, creator_id, created_at)
         SELECT
-            #{id}, (SELECT COUNT(*) FROM counsel_history hist WHERE hist.counsel_id = #{id}) + 1,
+            #{id}, (SELECT COUNT(1) FROM counsel_history hist WHERE hist.counsel_id = #{id}) + 1,
             category_id, title, content, customer_email, creator_id, modified_at
         FROM counsel
         WHERE
             id = #{id}
     </insert>
 
+    <select id="selectCharger" resultType="com.backend.study.counsel.model.CounselDTO">
+        SELECT charger_id, category_id
+        FROM counsel
+        WHERE charger_id IN
+              (
+                  SELECT id
+                  FROM user
+                  WHERE status = "POSSIBLE" AND role = "COUNSELOR"
+              )
+        GROUP BY charger_id
+        HAVING category_id = #{categoryId}
+        ORDER BY COUNT(charger_id), charger_id
+        LIMIT 1
+
+    </select>
+
+    <update id="updateCharger" parameterType="com.backend.study.counsel.model.CounselDTO">
+        UPDATE counsel
+        SET
+            charger_id = #{userId}
+        where
+            id = #{id}
+    </update>
+
+    <select id="selectCountNoChargerCounsels" resultType="int">
+        SELECT COUNT(1)
+        FROM counsel
+        WHERE category_id = #{categoryId} AND charger_id IS NULL
+    </select>
+
+    <select id="isRightCharger" resultType="Boolean">
+        SELECT EXISTS
+                   (
+                       SELECT 1
+                       FROM counsel
+                       WHERE id = #{counselId} AND charger_id = #{chargerId}
+                   )
+    </select>
+
+    <insert id="insertAnswer" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            answer
+            (counsel_id, content, creator_id, modifier_id, created_at, modified_at)
+        VALUES
+            (#{counselId}, #{content}, #{creatorId},#{modifierId} ,NOW(), NOW())
+    </insert>
+
+    <insert id="insertAnswerHistory">
+        INSERT INTO
+            answer_history
+            (answer_id, sequence, counsel_id, content, creator_id, created_at)
+        SELECT
+            #{id}, (SELECT COUNT(1) FROM answer_history hist WHERE hist.counsel_id = counsel_id) + 1,
+            counsel_id, content, creator_id, modified_at
+        FROM
+             answer
+        WHERE
+            id = #{id}
+    </insert>
 
 </mapper>

@@ -2,14 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.user.mapper.UserMapper">
 
-    <insert id="insert" parameterType="com.backend.study.user.dto.UserDTO" useGeneratedKeys="true" keyProperty="id">
+
+    <select id="hasPossibleCounselor" resultType="Boolean">
+        SELECT EXISTS
+            (
+                SELECT id
+                FROM user
+                WHERE status = "POSSIBLE"
+            );
+    </select>
+
+    <select id="selectRole" resultType="com.backend.study.user.model.enums.UserRole">
+        SELECT role
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.backend.study.user.model.UserDTO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user
-            (id, name, password, role, use_yn, creator_id, modifier_id, created_at, modified_at)
+            (id, name, password, role, status, use_yn, creator_id, modifier_id, created_at, modified_at)
         VALUES
-            (#{id}, #{name}, #{password},'COUNSELOR', 'Y', #{creatorId}, #{modifierId}, now(), now())
+            (#{id}, #{name}, #{password}, #{role}, #{status}, 'Y', #{creatorId}, #{modifierId}, NOW(), NOW())
     </insert>
 
-    <insert id="insertHistory" parameterType="com.backend.study.user.dto.UserDTO">
+    <insert id="insertHistory" parameterType="com.backend.study.user.model.UserDTO">
         INSERT INTO user_history
         (user_id, sequence, name, password, role, status, use_yn, creator_id, created_at)
         SELECT
@@ -19,6 +35,32 @@
         WHERE
             id = #{id}
     </insert>
+
+    <select id="selectExistId" resultType="Boolean">
+        SELECT EXISTS
+            (
+                SELECT id
+                FROM user
+                WHERE id = #{id}
+            );
+    </select>
+
+    <select id="selectIdByPassword" resultType="Boolean" >
+        SELECT EXISTS
+            (
+                SELECT id
+                FROM user
+                WHERE id = #{id} and password = #{password}
+            );
+    </select>
+
+    <update id="updateStatus" parameterType="com.backend.study.user.model.UserDTO">
+        UPDATE user
+        SET
+            status = #{userStatus}, modified_at = NOW(), modifier_id = #{id}
+        WHERE
+            id = #{id};
+    </update>
 
 </mapper>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.backend.study.category.mapper.CategoryMapper">
 
-    <select id="selectChildList" resultType="com.backend.study.category.dto.CategoryDTO">
+    <select id="selectChildList" resultType="com.backend.study.category.model.CategoryDTO">
         SELECT id
              , parent_id
              , name
@@ -10,7 +10,7 @@
         WHERE parent_id = #{categoryId} AND use_yn = 'Y';
     </select>
 
-    <select id="selectAllList" resultType="com.backend.study.category.dto.CategoryDTO">
+    <select id="selectAllList" resultType="com.backend.study.category.model.CategoryDTO">
         SELECT
             id, parent_id, name, description, use_yn, depth,
             creator_id, modifier_id, created_at, modified_at
