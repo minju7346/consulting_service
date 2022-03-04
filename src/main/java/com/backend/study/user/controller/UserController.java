@@ -15,11 +15,13 @@ import com.backend.study.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 public class UserController{
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     private final int COOKIE_AGE = 60 * 60 * 24 * 30;
 
@@ -31,8 +33,7 @@ public class UserController{
 
     @PostMapping("/user-login")
     public void loginUser( @Valid @RequestBody UserDTO userDTO, HttpServletResponse response){
-        String check = userService.login(userDTO);
-
+        userService.login(userDTO);
         Cookie COOKIE_ID = new Cookie("id", userDTO.getId());
         COOKIE_ID.setMaxAge(COOKIE_AGE);
         response.addCookie(COOKIE_ID);
@@ -41,7 +42,7 @@ public class UserController{
 
     @Permission(authority = UserRole.COUNSELOR)
     @PatchMapping("/user-status/{userStatus}")
-    public void changeStatus(@CookieValue(value = "id") Cookie cookie, @PathVariable UserStatus userStatus,
+    public void changeStatus(@PathVariable UserStatus userStatus,
         @Valid @RequestBody UserDTO userDTO){
 
         if(POSSIBLE.equals(userStatus)) {

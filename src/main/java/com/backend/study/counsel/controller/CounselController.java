@@ -12,40 +12,38 @@ import com.backend.study.user.model.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class CounselController {
 
-    @Autowired
-    private CounselService counselService;
+    private final CounselService counselService;
 
     @PostMapping("/counsel")
-    public void  register(@RequestBody CounselDTO counselDTO, @RequestParam long counselId){
-        counselService.register(counselDTO, counselId);
+    public void  register(@RequestBody CounselDTO counselDTO){
+        counselService.register(counselDTO);
     }
 
     @Permission(authority = UserRole.MANAGER)
     @PatchMapping("/counsel/{categoryId}")
-    public void distribute(@CookieValue(value = "id") Cookie cookie,
+    public void distribute(@CookieValue(name="id") String id,
             @RequestParam long counselId, @PathVariable long categoryId){
-        String id = cookie.getValue();
         counselService.distribute(id, categoryId, counselId);
     }
 
     @Permission(authority = UserRole.MANAGER)
     @GetMapping("/counsel/{categoryId}")
-    public Integer countNoChargerCounsels(@CookieValue(value = "id") Cookie cookie,
+    public Integer countNoChargerCounsels(@CookieValue(name="id") String id,
             @PathVariable long categoryId){
-        String id = cookie.getValue();
         return counselService.countNoChargerCounsels(id, categoryId);
     }
 
     @Permission(authority = UserRole.COUNSELOR)
     @PostMapping("/answer")
-    public void answerCounsel(@CookieValue(value = "id") Cookie cookie,
+    public void answerCounsel(@CookieValue(name="id") String chargerId,
         @Valid @RequestBody AnswerDTO answerDTO){
 
-        String chargerId = cookie.getValue();
         counselService.answerCounsel(chargerId, answerDTO);
     }
 

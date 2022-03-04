@@ -11,10 +11,13 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
-    @Autowired
-    private CategoryMapper categoryMapper;
+
+    private final CategoryMapper categoryMapper;
 
     public CategoryDTO getAllCategoryTree() {
         Map<Long, CategoryDTO> categoryMap = categoryMapper.selectAllList()

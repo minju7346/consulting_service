@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserService{
 
-    @Autowired
-    UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Transactional
     public void register(UserDTO userDTO) {

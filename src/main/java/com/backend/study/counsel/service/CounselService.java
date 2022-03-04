@@ -13,32 +13,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CounselService {
-    @Autowired
-    private CounselMapper counselMapper;
+
+    private final CounselMapper counselMapper;
 
     @Autowired
     private UserMapper userMapper;
 
     @Transactional
-    public void register(CounselDTO counselDTO, long counselId) {
-        if(!userMapper.hasPossibleCounselor()){
-            counselDTO.setChargerId(null);
-        }
-        else{
+    public void register(CounselDTO counselDTO) {
+        if(userMapper.hasPossibleCounselor()){
             CounselDTO chargerCounselDTO = counselMapper.selectCharger(counselDTO.getCategoryId());
             counselDTO.setChargerId(chargerCounselDTO.getChargerId());
         }
         counselMapper.insert(counselDTO);
-        counselMapper.insertHistory(counselId);
+        counselMapper.insertHistory(counselDTO.getId());
     }
 
     @Transactional
     public void distribute(String id, long categoryId, long counselId) {
         UserRole userRole = userMapper.selectRole(id);
-        if (!MANAGER.equals(userRole)) {
-            throw new IllegalArgumentException("권한이 없습니다.");
+        if (!(MANAGER == userRole)) {
+            throw new IllegalStateException("권한이 없습니다.");
         }
         CounselDTO counselDTO = counselMapper.selectCharger(categoryId);
         counselMapper.updateCharger(counselDTO.getChargerId(),counselId);
@@ -47,10 +47,10 @@ public class CounselService {
 
     public int countNoChargerCounsels(String id, long categoryId){
         UserRole userRole = userMapper.selectRole(id);
-        if (!MANAGER.equals(userRole)) {
-            throw new IllegalArgumentException("권한이 없습니다.");
+        if (!(MANAGER == userRole)) {
+            throw new IllegalStateException("권한이 없습니다.");
         }
-        return counselMapper.selectNoChargerCounsels(categoryId);
+        return counselMapper.selectCountNoChargerCounsels(categoryId);
     }
 
     public void answerCounsel(String chargerId, AnswerDTO answerDTO){

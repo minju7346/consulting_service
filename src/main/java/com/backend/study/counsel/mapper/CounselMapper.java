@@ -12,8 +12,8 @@ public interface CounselMapper {
     void insertHistory(long id);
     CounselDTO selectCharger(long categoryId);
     void updateCharger(@Param("userId") String userId, @Param("id") long id);
-    int selectNoChargerCounsels(long categoryId);
-    Boolean isRightCharger(@Param("counselId") long counselId, @Param("chargerId")String chargerId);
+    int selectCountNoChargerCounsels(long categoryId);
+    boolean isRightCharger(@Param("counselId") long counselId, @Param("chargerId")String chargerId);
     void insertAnswer(AnswerDTO answerDTO);
     void insertAnswerHistory(long answerId);
 }
