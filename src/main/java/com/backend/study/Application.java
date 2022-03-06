@@ -1,7 +1,6 @@
 package com.backend.study;
 
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -27,9 +26,7 @@ public class Application implements WebApplicationInitializer {
         addFilter(servletContext);
     }
 
-    private void addListener(AnnotationConfigWebApplicationContext rootContext) {
-
-    }
+    private void addListener(AnnotationConfigWebApplicationContext rootContext) {}
 
     private void addServlet(ServletContext servletContext, AnnotationConfigWebApplicationContext rootContext) {
         // root contetxt 와 servlet context 의 개념 알기

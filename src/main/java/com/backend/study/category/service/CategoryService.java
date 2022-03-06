@@ -2,7 +2,6 @@ package com.backend.study.category.service;
 
 import com.backend.study.category.model.CategoryDTO;
 import com.backend.study.category.mapper.CategoryMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
