@@ -1,7 +1,7 @@
 package com.backend.study.user.model;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,9 +13,9 @@ import lombok.Setter;
 public class LoginUserDTO {
 
 	@NotNull
-	@Size(min = 1, max = 25)
+	@Length(min = 1, max = 25)
 	private String id;
 	@NotNull
-	@Size(min = 1, max = 45)
+	@Length(min = 1, max = 45)
 	private String password;
 }

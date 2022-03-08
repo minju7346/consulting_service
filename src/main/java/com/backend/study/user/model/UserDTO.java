@@ -2,13 +2,12 @@ package com.backend.study.user.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.backend.study.user.model.enums.UserRole;
 import com.backend.study.user.model.enums.UserStatus;
@@ -17,9 +16,9 @@ import com.backend.study.user.model.enums.UserStatus;
 @NoArgsConstructor
 public class UserDTO {
     private String id;
-    @Size(min = 1, max = 25)
+    @Length(min = 1, max = 25)
     private String name;
-    @Size(min = 1, max = 45)
+    @Length(min = 1, max = 45)
     private String password;
     @NotNull
     private UserRole role;
