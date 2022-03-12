@@ -24,7 +24,7 @@ public class CounselDTO {
     @Length(min = 1, max = 1000)
     private String content;
     @NotNull
-    @Size(min = 1, max = 45)
+    @Length(min = 1, max = 45)
     private String customerName;
     @NotNull
     @Pattern(regexp = "^(.+)@(.+)$")

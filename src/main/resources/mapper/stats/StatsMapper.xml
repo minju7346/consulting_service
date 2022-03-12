@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.study.stats.mapper.StatsMapper">
+
+    <select id="selectStatsInfoByDate" resultType="com.backend.study.stats.model.StatsDTO">
+        SELECT DATE_FORMAT(created_at, "%Y-%m-%d") AS date,
+               (SELECT COUNT(1)
+               FROM counsel
+               WHERE category_id = #{categoryId} AND
+                    DATE_FORMAT(created_at, "%Y-%m-%d") = #{startDate}
+               ) AS totalCounsels,
+               (SELECT COUNT(1)
+               FROM counsel
+               WHERE category_id = #{categoryId} AND
+                    DATE_FORMAT(created_at, "%Y-%m-%d") = #{startDate} AND
+                    modified_at BETWEEN created_at AND DATE_ADD(created_at, INTERVAL 1 DAY) AND
+                    STATUS = 'COMPLETE'
+               ) AS completedCounsels,
+               (SELECT COUNT(1)
+               FROM counsel
+               WHERE category_id = #{categoryId} AND
+                    DATE_FORMAT(created_at, "%Y-%m-%d") = #{startDate} AND
+                    modified_at >= DATE_ADD(created_at, INTERVAL 1 DAY) OR
+                    STATUS = 'NOT COMPLETE'
+               ) AS delayedConsels
+        FROM counsel
+        WHERE
+            DATE_FORMAT(created_at, "%Y-%m-%d") = #{startDate}
+        GROUP BY DATE_FORMAT(created_at, "%Y-%m-%d");
+    </select>
+
+    <select id="selectStatsInfoByCharger" resultType="com.backend.study.stats.model.StatsDTO">
+        SELECT DATE_FORMAT(created_at, "%Y-%m-%d") AS date, charger_id,
+               (SELECT COUNT(1) FROM counsel where category_id = #{categoryId})
+                   AS totalCounsels,
+               (SELECT COUNT(1) from counsel
+                where modified_at BETWEEN created_at AND DATE_ADD(created_at, INTERVAL 1 DAY) AND
+                    STATUS = 'COMPLETE' AND category_id = #{categoryId}
+               ) AS completedCounsels,
+               (SELECT COUNT(1) from counsel
+                where modified_at >= DATE_ADD(created_at, INTERVAL 1 DAY) OR
+                    STATUS = 'NOT COMPLETE' AND category_id = #{categoryId}
+               ) AS delayedConsels
+        FROM counsel
+        WHERE
+            DATE_FORMAT(created_at, "%Y-%m-%d") = #{startDate}
+        GROUP BY charger_id;
+    </select>
+
+</mapper>

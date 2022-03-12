@@ -17,6 +17,11 @@ public class CounselController {
 
     private final CounselService counselService;
 
+    @GetMapping("/")
+    public String hello(){
+        return "Hello";
+    }
+
     @PostMapping("/counsels")
     public void  register(@RequestBody CounselDTO counselDTO){
 
