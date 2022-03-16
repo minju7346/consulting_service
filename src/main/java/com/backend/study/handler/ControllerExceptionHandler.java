@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerExceptionHandler extends IllegalStateException{
 
 	@ExceptionHandler(ResponseStatusException.class)
 	public ResponseEntity<ErrorResponse> responseStatusExceptionHandler(ResponseStatusException e) {
@@ -25,7 +25,6 @@ public class ControllerExceptionHandler {
 		log.error("handleDataException throw Exception : {}", WRONG_STATE);
 		return ErrorResponse.toResponseEntity(WRONG_STATE);
 	}
-
 
 }
 

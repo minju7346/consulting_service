@@ -1,5 +1,6 @@
 package com.backend.study.resolver;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -31,8 +32,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 		NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
 
 		HttpServletRequest request = (HttpServletRequest)nativeWebRequest.getNativeRequest();
-		String id = WebUtils.getCookie(request, "id").getValue();
-
-		return userMapper.selectUserById(id);
+		return userMapper.selectUserById(WebUtils.getCookie(request, "id").getValue());
 	}
+
 }

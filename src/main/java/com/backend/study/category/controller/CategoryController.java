@@ -20,7 +20,7 @@ public class CategoryController {
         return categoryService.getAllCategoryTree();
     }
 
-    @GetMapping("/categories/{id}/child-list")
+    @GetMapping("/categories/{id}/children")
     public List<CategoryDTO> getChildList(@PathVariable long id){
 
         return categoryService.getChildList(id);
