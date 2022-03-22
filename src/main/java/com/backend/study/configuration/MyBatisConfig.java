@@ -56,7 +56,7 @@ public class MyBatisConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         factoryBean.setConfiguration(configuration);
 
-        factoryBean.setTypeAliasesPackage("com.backend.study.**.dto");
+        factoryBean.setTypeAliasesPackage("com.backend.study.**.model");
         factoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/**/*.xml"));
         factoryBean.setTypeHandlers(new TypeHandler[] {
             new UserRoleHandler(),

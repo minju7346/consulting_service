@@ -7,7 +7,7 @@
              , parent_id
              , name
         FROM category
-        WHERE parent_id = #{categoryId} AND use_yn = 'Y';
+        WHERE parent_id = #{categoryId} AND use_yn = 'Y'
     </select>
 
     <select id="selectAllList" resultType="com.backend.study.category.model.CategoryDTO">
@@ -17,7 +17,7 @@
         FROM
             category
         WHERE
-            use_yn = 'Y';
+            use_yn = 'Y'
     </select>
 
 </mapper>

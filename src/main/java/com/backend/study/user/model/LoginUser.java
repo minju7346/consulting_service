@@ -5,11 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.backend.study.user.model.enums.UserRole;
-
-@Target({ElementType.METHOD})
+@Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Permission {
-
-	UserRole authority() default UserRole.COUNSELOR;
+public @interface LoginUser {
 }

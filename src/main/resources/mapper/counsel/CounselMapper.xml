@@ -50,34 +50,4 @@
         WHERE category_id = #{categoryId} AND charger_id IS NULL
     </select>
 
-    <select id="isRightCharger" resultType="Boolean">
-        SELECT EXISTS
-                   (
-                       SELECT 1
-                       FROM counsel
-                       WHERE id = #{counselId} AND charger_id = #{chargerId}
-                   )
-    </select>
-
-    <insert id="insertAnswer" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO
-            answer
-            (counsel_id, content, creator_id, modifier_id, created_at, modified_at)
-        VALUES
-            (#{counselId}, #{content}, #{creatorId},#{modifierId} ,NOW(), NOW())
-    </insert>
-
-    <insert id="insertAnswerHistory">
-        INSERT INTO
-            answer_history
-            (answer_id, sequence, counsel_id, content, creator_id, created_at)
-        SELECT
-            #{id}, (SELECT COUNT(1) FROM answer_history hist WHERE hist.counsel_id = counsel_id) + 1,
-            counsel_id, content, creator_id, modified_at
-        FROM
-             answer
-        WHERE
-            id = #{id}
-    </insert>
-
 </mapper>
