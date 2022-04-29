@@ -1,92 +1,56 @@
 # backend_study
+> 해당 프로젝트는 2022.02.01~2022.03.18(예정)기간동안 진행하고있으며, 고객 상담 서비스를 Spring MVC로 개발하는 프로젝트입니다.
 
-Java Spring project study
+<br>
 
-## Getting started
+**진행방식**
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+-   매 Iteration마다 코드리뷰 후 코드를 수정한 후, 머지 리퀘스트를 통해 진행됩니다.
+-   주차별 개발 이슈 및 스프링 관련 이론 이슈를 진행합니다.
+-   모든 진행사항은 GitLab을 통해 관리 됩니다.
+  -   https://gitlab.com/minju6577346/backend_study   
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+<br>
 
-## Add your files
+**코딩 컨벤션**
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+- https://github.com/naver/hackday-conventions-java
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/minju6577346/backend_study.git
-git branch -M main
-git push -uf origin main
-```
+<br>
 
-## Integrate with your tools
+**전체 DB 구조**
 
-- [ ] [Set up project integrations](https://gitlab.com/minju6577346/backend_study/-/settings/integrations)
+![image](https://user-images.githubusercontent.com/58619427/154786021-a3393f1c-d515-4fb7-b756-3ec88b705f12.png)
 
-## Collaborate with your team
+<br>
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+**개발 issue**
 
-## Test and Deploy
+[Iteration-1]
 
-Use the built-in continuous integration in GitLab.
+1. 프로젝트 세팅 Spring Web, MyBatis (스프링 부트 사용 금지)
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+2. 선택한 카테고리의 하위 카테고리 리스트를 조회하는 기능을 구현한다.
 
-***
+3. 전체 카테고리를 트리 구조로 조회하는 기능을 구현한다.
 
-# Editing this README
+4. 상담을 카테고리에 맞춰 등록하는 기능을 구현한다.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+5. 사용자 등록 기능을 구현한다. 
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+<br>
 
-## Name
-Choose a self-explaining name for your project.
+[Iteration-2]
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+1. 로그인 기능을 구현한다. 단순하게 비밀번호를 비교해서 로그인 시키도록 한다. 로그인 성공시 단순하게 사용자의 아이디를 쿠키로 발행해준다.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+2. 상담원의 상태로 변경해주는 기능을 구현한다.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+3. 카테고리에 속한 매니저는 해당 카테고리에 들어온 문의(담당자가 없는)에 대해 분배 기능을 구현한다. (상담 가능 가능 상담원 중) 분배의 우선 순위는 현재 상담건이 적은 사람을 우선적으로 분배하며, 동일한 조건인 경우 이름순으로 우선 배분된다.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+4. 상담이 인입될 때 위의 분배 로직과 동일하게 분배될 수 있도록 하며, 상담가능한 상태의 상담원이 없을 시 담당자가 없는 상태로 둔다.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+5. 카테고리에 매니저 권한이 있는 사용자가 해당 카테고리에 담당자가 없는 상담건의 갯수를 조회하는 기능을 구현한다.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project userStatus
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+![image](https://user-images.githubusercontent.com/58619427/165886104-7dbc3ee2-49ae-4e6b-9043-9e42fe72752b.png)
